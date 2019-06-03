@@ -1,13 +1,135 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+  color: #f5f5f5;
+}
+
+.App {
+  width: 100%;
+  height: 100vh;
+  background-image: url(./bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.input--tmp {
+  border: none;
+  background: #f5f5f5;
+  box-shadow: inset 0 0 0 2px #0079bf;
+  height: 22px;
+  padding-left: 5px;
+}
+
+.name--change {
+  border-bottom: 1px dotted #f5f5f5;
+}
+
+/* 
+  Styles for Button
+*/
+
+.btn {
+  width: 150px;
+  height: 30px;
+  background-color: #1a4760;
+  border: 1px solid #1a4760;
+  cursor: pointer;
+  color: #f9f9f9;
+  border-radius: 5px;
+  outline: none;
+}
+
+.btn:hover {
+  box-shadow: 0 0 2px #000;
+}
+
+/* Styles for Modal */
+
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.modalWindow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2b7099;
+  width: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modalHeader,
+.modalBody,
+.modalFooter {
+  padding: 10px 20px;
+}
+
+.modalHeader {
+  min-height: 50px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.modalHeader i{
+  cursor: pointer;
+}
+
+.modalTitle {
+  font-weight: bold;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* 
+  Styles for Header
+*/
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #2b7099;
+  box-shadow: -5px 1px 28px 3px rgba(0,0,0,.75);
+}
+
+.logo__name {
+  font-size: 25px;
+  text-align: center;
+  margin: auto 25px;
+}
+
+/* 
+  Styles for Content
+*/
+
+.columns {
+  width: 100%;
+  padding: 70px 20px 20px 20px;
 }
