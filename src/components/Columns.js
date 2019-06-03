@@ -1,11 +1,15 @@
 import React from 'react';
 
-export default function Columns() {
+import Column from './Column';
+
+const Columns = () => {
   return(
     <main className="content">
       <div className="columns">
-        asdasd
+        <Column />
       </div>
     </main>
   );
 }
+
+export default Columns;

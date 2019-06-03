@@ -30,7 +30,7 @@ export default class App extends Component {
 
     this.openTmpInput = (elem) => {
       this.setState({ inputOpen: true });
-    };
+    }; 
   }
   
   render() {
