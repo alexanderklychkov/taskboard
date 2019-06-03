@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import Button from './Button';
 import Modal from './Modal';
 import PropertyBoard from './PropertyBoard';
+import AddColumn from './AddColumn';
 
 export default class Header extends Component {
   constructor() {
@@ -23,7 +25,7 @@ export default class Header extends Component {
 
   render() {
     const {isOpen} = this.state;
-    const {openTmpInput, nameBoard, inputOpen, closeTmpInput} = this.props;
+    const {openTmpInput, nameBoard, inputOpen, closeTmpInput, onSubmit} = this.props;
 
     return(
       <header className="header">
@@ -31,7 +33,7 @@ export default class Header extends Component {
           <p className="logo__name">{nameBoard}</p>
         </div>
         <div className="add-column">
-          asdasasd
+          <AddColumn onSubmit={onSubmit}/>
         </div>
         <div className="property-board">
           <Button onClick={this.openModal}>Свойства</Button>

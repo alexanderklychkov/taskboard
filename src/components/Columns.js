@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Column from './Column';
 
-const Columns = () => {
-  return(
-    <main className="content">
-      <div className="columns">
-        <Column />
-      </div>
-    </main>
-  );
-}
+export default class Columns extends Component {
 
-export default Columns;
+  
+  
+
+  render() {
+
+    const columns = this.props.columns.map((item) => {
+      const { id, ...itemProps } = item;
+
+      return (
+        <div key={id} className="column">
+          <Column 
+            { ...itemProps }
+          />
+        </div>
+      );
+    });
+
+
+    return(
+      <main className="content">
+        <div className="columns">
+          { columns }
+        </div>
+      </main>
+    );
+  }
+}

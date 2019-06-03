@@ -29,6 +29,20 @@ body {
   border-bottom: 1px dotted #f5f5f5;
 }
 
+.input {
+  background: #f5f5f5;
+  border: 1px solid #1a4760;
+  width: 170px;
+  height: 30px;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 5px;
+}
+
+.input--margin {
+  margin-right: 5px;
+}
+
 /* 
   Styles for Button
 */
@@ -130,6 +144,7 @@ body {
 */
 
 .columns {
+  display: flex;
   width: 100%;
   padding-top: 50px;
 }
@@ -160,10 +175,11 @@ body {
 }
 
 .column-head__property {
-  font-size: 16px;
+  font-size: 18px;
   color: #f5f5f5;
   text-decoration: none;
-  width: 15px;
+  padding-left: 2px;
+  width: 19px;
   height: 19px;
 }
 
@@ -172,7 +188,7 @@ body {
   box-shadow: inset 0 0 1px #000;
   border-radius: 5px;
   padding-left: 2px;
-  width: 17px;
+  width: 19px;
   height: 19px;
 }
 
