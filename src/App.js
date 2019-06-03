@@ -27,7 +27,7 @@ export default class App extends Component {
         label: 'Колонка 2',
         tasks: [{
           id: 0,
-          label: 'Наконец-то сделать это приложение' 
+          label: 'Наконец-то сделать это приложение!!'  
         }]
       }]
     }
