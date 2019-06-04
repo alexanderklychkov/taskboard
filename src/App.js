@@ -7,34 +7,32 @@ export default class App extends Component {
   constructor() {
     super();
 
+    this.columnId = 0;
+    this.taskId = 0;
+
     this.state = {
       nameBoard: localStorage.getItem('nameBoard') !== null ? localStorage.getItem('nameBoard') : 'TaskBoard',
       inputOpen: false,
-      columns: [{
-        id: 0,
-        label: 'Колонка 1',
-        tasks: [{
-          id: 0,
-          label: 'Выпить кофе'
-        },
-        {
-          id: 1,
-          label: 'Задача 2'
-        }]
-      },
-      {
-        id: 1,
-        label: 'Колонка 2',
-        tasks: [{
-          id: 0,
-          label: 'Наконец-то сделать это приложение!!'  
-        }]
-      }]
-    }
+      columns: []
+    };
 
-    this.onSubmit = (e) => {
-      e.preventDefault();
-    }
+    this.addItem = (text) => {
+      const newItem = this.createColumnItem(text);
+
+      this.setState((state) => {
+        const newArr = [
+          ...state.columns,
+          newItem
+        ];
+
+        console.log(newArr);
+        localStorage.setItem('columns', JSON.stringify(newArr));
+
+        return {
+          columns: newArr
+        }
+      })
+    };
 
     this.updateData = (value) => {
       let newValue = value;
@@ -56,6 +54,31 @@ export default class App extends Component {
       this.setState({ inputOpen: true });
     }; 
   }
+
+  createColumnItem(label) {
+    return {
+      id: this.columnId++,
+      label,
+      tasks: [
+        {
+          id: 0,
+          label: 'Задача 1'
+        },
+        {
+          id: 1,
+          label: 'Задача 2'
+        }
+
+      ]
+    }
+  }
+
+  createTaskItem(label) {
+    return {
+      id: this.taskId++,
+      label
+    }
+  }
   
   render() {
     const {nameBoard, inputOpen, columns} = this.state;
@@ -67,7 +90,7 @@ export default class App extends Component {
           nameBoard={nameBoard}
           inputOpen={inputOpen}
           closeTmpInput={this.closeTmpInput}
-          onSubmit={this.onSubmit}
+          addItem={this.addItem}
         />
         <Columns 
           columns={columns}

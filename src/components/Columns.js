@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Column from './Column';
 
 export default class Columns extends Component {
-
   
   
 

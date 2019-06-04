@@ -25,7 +25,7 @@ export default class Header extends Component {
 
   render() {
     const {isOpen} = this.state;
-    const {openTmpInput, nameBoard, inputOpen, closeTmpInput, onSubmit} = this.props;
+    const {openTmpInput, nameBoard, inputOpen, closeTmpInput, addItem} = this.props;
 
     return(
       <header className="header">
@@ -33,7 +33,7 @@ export default class Header extends Component {
           <p className="logo__name">{nameBoard}</p>
         </div>
         <div className="add-column">
-          <AddColumn onSubmit={onSubmit}/>
+          <AddColumn addItem={addItem}/>
         </div>
         <div className="property-board">
           <Button onClick={this.openModal}>Свойства</Button>

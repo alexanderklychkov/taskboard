@@ -198,4 +198,6 @@ body {
 
 .column-add-task {
   height: 15%;
+  display: flex;
+  justify-content: center;
 }

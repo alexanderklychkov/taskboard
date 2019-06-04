@@ -1,4 +1,7 @@
+
 import React, { Component } from 'react';
+
+import AddTasks from './AddTasks';
 
 export default class Column extends Component {
   
@@ -13,10 +16,11 @@ export default class Column extends Component {
           <a className="column-head__property" href="#top">...</a>  
         </div>
         <div className="column-tasks">
-          { tasks[0].label }
+          {tasks[0].label}
+          {tasks[1].label}
         </div>
         <div className="column-add-task">
-          asd
+          <AddTasks />
         </div>
       </>
     );
