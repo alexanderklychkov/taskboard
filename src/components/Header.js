@@ -18,14 +18,14 @@ export default class Header extends Component {
     };
 
     this.handleCancel = () => {
-      this.setState({isOpen: false})
+      this.setState({isOpen: false});
     };
 
   }
 
   render() {
-    const {isOpen} = this.state;
-    const {openTmpInput, nameBoard, inputOpen, closeTmpInput, addItem} = this.props;
+    const { isOpen } = this.state;
+    const { openTmpInput, nameBoard, inputOpen, closeTmpInput, addColumnItem } = this.props;
 
     return(
       <header className="header">
@@ -33,7 +33,7 @@ export default class Header extends Component {
           <p className="logo__name">{nameBoard}</p>
         </div>
         <div className="add-column">
-          <AddColumn addItem={addItem}/>
+          <AddColumn addColumnItem={addColumnItem}/>
         </div>
         <div className="property-board">
           <Button onClick={this.openModal}>Свойства</Button>

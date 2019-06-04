@@ -18,7 +18,7 @@ export default class AddColumn extends Component {
 
     this.onSubmit = (e) => {
       e.preventDefault();
-      this.props.addItem(this.state.label);
+      this.props.addColumnItem(this.state.label);
       this.setState({
         label: ''
       });

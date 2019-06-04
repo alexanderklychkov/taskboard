@@ -201,3 +201,15 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.form-add-task {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-add-task__input {
+  margin-bottom: 5px;
+}

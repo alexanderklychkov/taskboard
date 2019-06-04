@@ -7,7 +7,7 @@ export default class Column extends Component {
   
 
   render() {
-    const { label, tasks } = this.props;
+    const { label, tasks, addTaskItem, id } = this.props;
 
     return(
       <>
@@ -17,10 +17,9 @@ export default class Column extends Component {
         </div>
         <div className="column-tasks">
           {tasks[0].label}
-          {tasks[1].label}
         </div>
         <div className="column-add-task">
-          <AddTasks />
+          <AddTasks addTaskItem={addTaskItem} id={id}/>
         </div>
       </>
     );

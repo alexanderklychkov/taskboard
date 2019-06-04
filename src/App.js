@@ -13,10 +13,10 @@ export default class App extends Component {
     this.state = {
       nameBoard: localStorage.getItem('nameBoard') !== null ? localStorage.getItem('nameBoard') : 'TaskBoard',
       inputOpen: false,
-      columns: []
+      columns: localStorage.getItem('columns') !== null ? JSON.parse(localStorage.getItem('columns')) : []
     };
 
-    this.addItem = (text) => {
+    this.addColumnItem = (text) => {
       const newItem = this.createColumnItem(text);
 
       this.setState((state) => {
@@ -25,7 +25,6 @@ export default class App extends Component {
           newItem
         ];
 
-        console.log(newArr);
         localStorage.setItem('columns', JSON.stringify(newArr));
 
         return {
@@ -33,6 +32,32 @@ export default class App extends Component {
         }
       })
     };
+
+    this.addTaskItem = (text, id) => {
+      const newItem = this.createTaskItem(text);
+      const column = {...this.state.columns[id]}
+      column.tasks = [
+        ...column.tasks,
+        newItem
+      ];
+
+      this.setState((state) => {
+        const idx = state.columns.findIndex((el) => el.id === id);
+
+        const before = state.columns.slice(0, idx);
+        const after = state.columns.slice(idx + 1);
+
+        const newArray = [...before, column, ...after];
+
+        localStorage.setItem('columns', JSON.stringify(newArray));
+
+        return {
+          columns: newArray
+        }
+      })
+
+      
+    }
 
     this.updateData = (value) => {
       let newValue = value;
@@ -59,17 +84,7 @@ export default class App extends Component {
     return {
       id: this.columnId++,
       label,
-      tasks: [
-        {
-          id: 0,
-          label: 'Задача 1'
-        },
-        {
-          id: 1,
-          label: 'Задача 2'
-        }
-
-      ]
+      tasks: []
     }
   }
 
@@ -90,10 +105,11 @@ export default class App extends Component {
           nameBoard={nameBoard}
           inputOpen={inputOpen}
           closeTmpInput={this.closeTmpInput}
-          addItem={this.addItem}
+          addColumnItem={this.addColumnItem}
         />
         <Columns 
           columns={columns}
+          addTaskItem={this.addTaskItem}
         />      
       </div>  
     );
