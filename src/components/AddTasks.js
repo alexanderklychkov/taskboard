@@ -47,7 +47,7 @@ export default class AddTasks extends Component {
           onCancel={this.handleCancel}
         >
           <form className="form-add-task" onSubmit={this.onSubmit}>
-            <input className="input form-add-task__input" type="text" onChange={this.onLabelChange} placeholder="Название задачи..." value={this.state.label}/>
+            <input className="input form-add-task__input" type="text" onChange={this.onLabelChange} placeholder="Название задачи..." value={this.state.label} autoFocus={true}/>
             <Button>Добавить задачу</Button>
           </form>
         </Modal>

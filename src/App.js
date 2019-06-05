@@ -7,8 +7,8 @@ export default class App extends Component {
   constructor() {
     super();
 
-    this.columnId = 0;
-    this.taskId = 0;
+    this.columnId = localStorage.getItem('columnId') !== null ? +JSON.parse(localStorage.getItem('columnId')) + 1 : 0;
+    this.taskId = localStorage.getItem('taskId') !== null ? +JSON.parse(localStorage.getItem('taskId')) + 1 : 0;
 
     this.state = {
       nameBoard: localStorage.getItem('nameBoard') !== null ? localStorage.getItem('nameBoard') : 'TaskBoard',
@@ -40,6 +40,8 @@ export default class App extends Component {
         ...column.tasks,
         newItem
       ];
+      
+      
 
       this.setState((state) => {
         const idx = state.columns.findIndex((el) => el.id === id);
@@ -59,7 +61,7 @@ export default class App extends Component {
       
     }
 
-    this.updateData = (value) => {
+    this._updateNameBoard = (value) => {
       let newValue = value;
 
       if (!newValue.length) {
@@ -72,7 +74,7 @@ export default class App extends Component {
 
     this.closeTmpInput = (elem) => {
       this.setState({ inputOpen: false });
-      return this.updateData(elem.value);
+      return this._updateNameBoard(elem.value);
     };
 
     this.openTmpInput = (elem) => {
@@ -81,6 +83,7 @@ export default class App extends Component {
   }
 
   createColumnItem(label) {
+    localStorage.setItem('columnId', JSON.stringify(this.columnId));
     return {
       id: this.columnId++,
       label,
@@ -88,7 +91,8 @@ export default class App extends Component {
     }
   }
 
-  createTaskItem(label) {
+  createTaskItem(label) {    
+    localStorage.setItem('taskId', JSON.stringify(this.taskId));
     return {
       id: this.taskId++,
       label

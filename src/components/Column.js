@@ -1,13 +1,26 @@
 
 import React, { Component } from 'react';
 
+import Task from './Task';
 import AddTasks from './AddTasks';
 
 export default class Column extends Component {
   
 
   render() {
-    const { label, tasks, addTaskItem, id } = this.props;
+    const { label, addTaskItem, id } = this.props;
+
+    const tasks = this.props.tasks.map((item) => {
+      const { id, ...itemTasks } = item;
+
+      return (
+        <div key={id} className="column-tasks__item">
+          <Task 
+            { ...itemTasks }
+          />
+        </div>
+      );
+    });
 
     return(
       <>
@@ -16,7 +29,7 @@ export default class Column extends Component {
           <a className="column-head__property" href="#top">...</a>  
         </div>
         <div className="column-tasks">
-          {tasks[0].label}
+          { tasks }
         </div>
         <div className="column-add-task">
           <AddTasks addTaskItem={addTaskItem} id={id}/>
