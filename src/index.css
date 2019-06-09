@@ -15,13 +15,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
 .App {
@@ -215,14 +215,22 @@ body {
 }
 
 .column-tasks__item {
- display: flex;
- justify-content: space-between;
- align-items: center;
- height: 30px;
- width: 100%;
  background: #1a4760;
  border-radius: 5px;
  margin-bottom: 5px; 
+}
+
+.column-tasks__item-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.column-tasks__item:nth-last-child(1) {
+  margin-bottom: 0;
 }
 
 .column-tasks__item-name {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Modal from './Modal';
 import Button from './Button';
 
-export default class Task extends Component {
+export default class ColumnProperty extends Component {
   constructor() {
     super();
 
@@ -19,25 +19,19 @@ export default class Task extends Component {
       this.setState({ isOpen: false });
     }
   }
-  
 
   render() {
-    const { label, onDeletedTask } = this.props;
+    const { onDeletedColumn } = this.props;
 
     return(
       <>
-        <div className="column-tasks__item-area" onClick={this.openModal}>
-          <p className="column-tasks__item-name">{ label }</p>
-          <p className="column-tasks__item-property">•</p>
-        </div>
-
-        
+        <a className="column-head__property" href="#top" onClick={this.openModal}>...</a>
         <Modal
-          title="Свойства задачи"
+          title='Свойства колонки'
           isOpen={this.state.isOpen}
           onCancel={this.handleCancel}
         >
-          <Button onClick={onDeletedTask}>Удалить задачу</Button>
+          <Button onClick={onDeletedColumn}>Удалить колонку</Button>
         </Modal>
       </>
     );

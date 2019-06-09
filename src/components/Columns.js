@@ -8,7 +8,7 @@ export default class Columns extends Component {
 
   render() {
 
-    const { addTaskItem } = this.props;
+    const { addTaskItem, onDeletedColumn, onDeletedTask } = this.props;
 
     const columns = this.props.columns.map((item) => {
       const { id, ...itemProps } = item;
@@ -19,6 +19,8 @@ export default class Columns extends Component {
             { ...itemProps }
             addTaskItem={addTaskItem}
             id={id}
+            onDeletedColumn={onDeletedColumn}
+            onDeletedTask={onDeletedTask}
           />
         </div>
       );

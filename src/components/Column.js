@@ -3,20 +3,22 @@ import React, { Component } from 'react';
 
 import Task from './Task';
 import AddTasks from './AddTasks';
+import ColumnProperty from './ColumnProperty';
 
 export default class Column extends Component {
   
 
   render() {
-    const { label, addTaskItem, id } = this.props;
+    const { label, addTaskItem, id, onDeletedColumn, onDeletedTask } = this.props;
 
     const tasks = this.props.tasks.map((item) => {
       const { id, ...itemTasks } = item;
 
       return (
-        <div key={id} className="column-tasks__item">
+        <div key={id} className="column-tasks__item" >
           <Task 
             { ...itemTasks }
+            onDeletedTask={() => onDeletedTask(id)}
           />
         </div>
       );
@@ -26,7 +28,9 @@ export default class Column extends Component {
       <>
         <div className="column-head">
           <h2 className="column-head__name">{label}</h2>
-          <a className="column-head__property" href="#top">...</a>  
+          <ColumnProperty 
+            onDeletedColumn={() => onDeletedColumn(id)}
+          /> 
         </div>
         <div className="column-tasks">
           { tasks }

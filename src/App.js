@@ -27,25 +27,45 @@ export default class App extends Component {
 
         localStorage.setItem('columns', JSON.stringify(newArr));
 
+
+        let columns = JSON.parse(localStorage.getItem('columns'));
+        console.log(columns);
+
         return {
-          columns: newArr
+          columns: columns
         }
       })
     };
 
+    this.deleteColumnItem = (id) => {
+      this.setState((state) => {
+        const idx = state.columns.findIndex((el) => el.id === id);
+
+        const before = state.columns.slice(0, idx);
+        const after = state.columns.slice(idx + 1);
+
+        const newArray = [...before, ...after];
+
+        localStorage.setItem('columns', JSON.stringify(newArray));
+
+        let columns = JSON.parse(localStorage.getItem('columns'));
+
+        return {
+          columns: columns
+        }
+      });
+    }
+
     this.addTaskItem = (text, id) => {
       const newItem = this.createTaskItem(text);
-      const column = {...this.state.columns[id]}
+      const idx = this.state.columns.findIndex((el) => el.id === id);
+      let column = {...this.state.columns[idx]};
       column.tasks = [
         ...column.tasks,
         newItem
       ];
-      
-      
 
       this.setState((state) => {
-        const idx = state.columns.findIndex((el) => el.id === id);
-
         const before = state.columns.slice(0, idx);
         const after = state.columns.slice(idx + 1);
 
@@ -56,10 +76,12 @@ export default class App extends Component {
         return {
           columns: newArray
         }
-      })
+      });
+    };
 
-      
-    }
+    this.deleteTaskItem = (id) => {
+      console.log('Удалить ' + id);
+    };
 
     this._updateNameBoard = (value) => {
       let newValue = value;
@@ -100,7 +122,7 @@ export default class App extends Component {
   }
   
   render() {
-    const {nameBoard, inputOpen, columns} = this.state;
+    const {nameBoard, inputOpen, columns, columnId} = this.state;
 
     return (
       <div className="App">
@@ -114,6 +136,9 @@ export default class App extends Component {
         <Columns 
           columns={columns}
           addTaskItem={this.addTaskItem}
+          onDeletedColumn={this.deleteColumnItem}
+          onDeletedTask={this.deleteTaskItem}
+          columnId={columnId}
         />      
       </div>  
     );
