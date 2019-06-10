@@ -37,9 +37,9 @@ export default class App extends Component {
       })
     };
 
-    this.deleteColumnItem = (id) => {
+    this.deleteColumnItem = (idColumn) => {
       this.setState((state) => {
-        const idx = state.columns.findIndex((el) => el.id === id);
+        const idx = state.columns.findIndex((el) => el.idColumn === idColumn);
 
         const before = state.columns.slice(0, idx);
         const after = state.columns.slice(idx + 1);
@@ -48,17 +48,15 @@ export default class App extends Component {
 
         localStorage.setItem('columns', JSON.stringify(newArray));
 
-        let columns = JSON.parse(localStorage.getItem('columns'));
-
         return {
-          columns: columns
+          columns: newArray
         }
       });
     }
 
-    this.addTaskItem = (text, id) => {
+    this.addTaskItem = (text, idColumn) => {
       const newItem = this.createTaskItem(text);
-      const idx = this.state.columns.findIndex((el) => el.id === id);
+      const idx = this.state.columns.findIndex((el) => el.idColumn === idColumn);
       let column = {...this.state.columns[idx]};
       column.tasks = [
         ...column.tasks,
@@ -79,8 +77,32 @@ export default class App extends Component {
       });
     };
 
-    this.deleteTaskItem = (id) => {
-      console.log('Удалить ' + id);
+    this.deleteTaskItem = (idTask, idColumn) => {
+      const idx = this.state.columns.findIndex((el) => el.idColumn === idColumn);
+      let column = {...this.state.columns[idx]};
+
+      const idxTask = column.tasks.findIndex((el) => el.idTask === idTask);
+
+      const before = column.tasks.slice(0, idxTask);
+      const after = column.tasks.slice(idxTask + 1);
+
+      const newArr = [...before, ...after];
+      column.tasks = newArr;
+
+      console.log(column);
+      
+      this.setState((state) => {
+        const before = state.columns.slice(0, idx);
+        const after = state.columns.slice(idx + 1);
+
+        const newArray = [...before, column, ...after];
+
+        localStorage.setItem('columns', JSON.stringify(newArray));
+
+        return {
+          columns: newArray
+        }
+      });
     };
 
     this._updateNameBoard = (value) => {
@@ -107,7 +129,7 @@ export default class App extends Component {
   createColumnItem(label) {
     localStorage.setItem('columnId', JSON.stringify(this.columnId));
     return {
-      id: this.columnId++,
+      idColumn: this.columnId++,
       label,
       tasks: []
     }
@@ -116,13 +138,13 @@ export default class App extends Component {
   createTaskItem(label) {    
     localStorage.setItem('taskId', JSON.stringify(this.taskId));
     return {
-      id: this.taskId++,
+      idTask: this.taskId++,
       label
     }
   }
   
   render() {
-    const {nameBoard, inputOpen, columns, columnId} = this.state;
+    const {nameBoard, inputOpen, columns} = this.state;
 
     return (
       <div className="App">
@@ -138,7 +160,6 @@ export default class App extends Component {
           addTaskItem={this.addTaskItem}
           onDeletedColumn={this.deleteColumnItem}
           onDeletedTask={this.deleteTaskItem}
-          columnId={columnId}
         />      
       </div>  
     );

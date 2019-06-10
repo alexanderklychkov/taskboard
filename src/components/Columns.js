@@ -11,14 +11,14 @@ export default class Columns extends Component {
     const { addTaskItem, onDeletedColumn, onDeletedTask } = this.props;
 
     const columns = this.props.columns.map((item) => {
-      const { id, ...itemProps } = item;
+      const { idColumn, ...itemProps } = item;
 
       return (
-        <div key={id} className="column">
+        <div key={idColumn} className="column">
           <Column 
             { ...itemProps }
             addTaskItem={addTaskItem}
-            id={id}
+            idColumn={idColumn}
             onDeletedColumn={onDeletedColumn}
             onDeletedTask={onDeletedTask}
           />

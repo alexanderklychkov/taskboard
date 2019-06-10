@@ -20,7 +20,7 @@ export default class AddTasks extends Component {
 
     this.onSubmit = (e) => {
       e.preventDefault();
-      this.props.addTaskItem(this.state.label, this.props.id);
+      this.props.addTaskItem(this.state.label, this.props.idColumn);
       this.setState({
         label: ''
       });

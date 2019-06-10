@@ -9,16 +9,16 @@ export default class Column extends Component {
   
 
   render() {
-    const { label, addTaskItem, id, onDeletedColumn, onDeletedTask } = this.props;
+    const { label, addTaskItem, idColumn, onDeletedColumn, onDeletedTask } = this.props;
 
     const tasks = this.props.tasks.map((item) => {
-      const { id, ...itemTasks } = item;
+      const { idTask, ...itemTasks } = item;
 
       return (
-        <div key={id} className="column-tasks__item" >
+        <div key={idTask} className="column-tasks__item" >
           <Task 
             { ...itemTasks }
-            onDeletedTask={() => onDeletedTask(id)}
+            onDeletedTask={() => onDeletedTask(idTask, idColumn)}
           />
         </div>
       );
@@ -29,14 +29,14 @@ export default class Column extends Component {
         <div className="column-head">
           <h2 className="column-head__name">{label}</h2>
           <ColumnProperty 
-            onDeletedColumn={() => onDeletedColumn(id)}
+            onDeletedColumn={() => onDeletedColumn(idColumn)}
           /> 
         </div>
         <div className="column-tasks">
           { tasks }
         </div>
         <div className="column-add-task">
-          <AddTasks addTaskItem={addTaskItem} id={id}/>
+          <AddTasks addTaskItem={addTaskItem} idColumn={idColumn}/>
         </div>
       </>
     );
