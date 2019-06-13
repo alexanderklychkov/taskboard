@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Срабатывание функции onClick() при нажатии 1`] = `
+<button
+  className="btn"
+  disabled={false}
+  onClick={[Function]}
+>
+  Добавить задачу
+</button>
+`;
+
+exports[`Срабатывание функции onClick() при нажатии 2`] = `
+<button
+  className="btn"
+  disabled={false}
+  onClick={[Function]}
+>
+  Добавить задачу
+</button>
+`;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import Header from './components/Header';
 import Columns from './components/Columns';
@@ -29,7 +30,6 @@ export default class App extends Component {
 
 
         let columns = JSON.parse(localStorage.getItem('columns'));
-        console.log(columns);
 
         return {
           columns: columns
@@ -88,8 +88,6 @@ export default class App extends Component {
 
       const newArr = [...before, ...after];
       column.tasks = newArr;
-
-      console.log(column);
       
       this.setState((state) => {
         const before = state.columns.slice(0, idx);
@@ -123,7 +121,11 @@ export default class App extends Component {
 
     this.openTmpInput = (elem) => {
       this.setState({ inputOpen: true });
-    }; 
+    };
+    
+    this.onDragEnd = (result) => {
+
+    }
   }
 
   createColumnItem(label) {
@@ -155,12 +157,14 @@ export default class App extends Component {
           closeTmpInput={this.closeTmpInput}
           addColumnItem={this.addColumnItem}
         />
-        <Columns 
-          columns={columns}
-          addTaskItem={this.addTaskItem}
-          onDeletedColumn={this.deleteColumnItem}
-          onDeletedTask={this.deleteTaskItem}
-        />      
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Columns 
+            columns={columns}
+            addTaskItem={this.addTaskItem}
+            onDeletedColumn={this.deleteColumnItem}
+            onDeletedTask={this.deleteTaskItem}
+          />
+        </DragDropContext>      
       </div>  
     );
   }

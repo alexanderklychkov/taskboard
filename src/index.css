@@ -214,12 +214,6 @@ body {
   margin-right: 17px;
 }
 
-.column-tasks__item {
- background: #1a4760;
- border-radius: 5px;
- margin-bottom: 5px; 
-}
-
 .column-tasks__item-area {
   display: flex;
   justify-content: space-between;
@@ -227,6 +221,9 @@ body {
   height: 30px;
   width: 100%;
   cursor: pointer;
+  background: #1a4760;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .column-tasks__item:nth-last-child(1) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 
 import Modal from './Modal';
 import Button from './Button';
@@ -26,10 +27,14 @@ export default class Task extends Component {
 
     return(
       <>
-        <div className="column-tasks__item-area" onClick={this.openModal}>
-          <p className="column-tasks__item-name">{ label }</p>
-          <p className="column-tasks__item-property">•</p>
-        </div>
+        <Draggable draggableId={this.props.idTask} index={this.props.index}>
+        {(provided) => (
+          <div className="column-tasks__item-area" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onClick={this.openModal}>
+            <p className="column-tasks__item-name">{ label }</p>
+            <p className="column-tasks__item-property">•</p>
+          </div>
+        )}
+        </Draggable>
 
         
         <Modal
