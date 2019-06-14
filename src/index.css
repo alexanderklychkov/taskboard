@@ -164,7 +164,7 @@ body {
   padding-top: 50px;
 }
 
-.column {
+.column-area {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -175,6 +175,7 @@ body {
   border-radius: 5px;
   margin: 20px;
   font-size: 14px; 
+
 }
 
 .column-head {

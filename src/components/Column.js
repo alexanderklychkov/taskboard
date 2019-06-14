@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Task from './Task';
 import AddTasks from './AddTasks';
@@ -29,23 +29,29 @@ export default class Column extends Component {
 
     return(
       <>
-        <div className="column-head">
-          <h2 className="column-head__name">{label}</h2>
-          <ColumnProperty 
-            onDeletedColumn={() => onDeletedColumn(idColumn)}
-          /> 
-        </div>
-        <Droppable droppableId={idColumn}>
-        {provided => (
-          <div className="column-tasks" ref={provided.innerRef} {...provided.droppableProps}>
-            { tasks }
-            {provided.placeholder}
-          </div>
-        )}
-        </Droppable>
-        <div className="column-add-task">
-          <AddTasks addTaskItem={addTaskItem} idColumn={idColumn}/>
-        </div>
+        <Draggable draggableId={idColumn} index={this.props.index}>
+          {provided => (
+            <div className="column-area" {...provided.draggableProps} ref={provided.innerRef}>
+              <div className="column-head" {...provided.dragHandleProps}>
+                <h2 className="column-head__name">{label}</h2>
+                <ColumnProperty  
+                  onDeletedColumn={() => onDeletedColumn(idColumn)}
+                /> 
+              </div>
+              <Droppable droppableId={idColumn}>
+              {provided => (
+                <div className="column-tasks" ref={provided.innerRef} {...provided.droppableProps}>
+                  { tasks }
+                  {provided.placeholder}
+                </div>
+              )}
+              </Droppable>
+              <div className="column-add-task">
+                <AddTasks addTaskItem={addTaskItem} idColumn={idColumn}/>
+              </div>
+            </div>
+            )}
+          </Draggable>
       </>
     );
   }

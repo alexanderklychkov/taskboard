@@ -124,7 +124,7 @@ export default class App extends Component {
     };
     
     this.onDragEnd = (result) => {
-      const { destination, source } = result;
+      const { destination, source, draggableId, type } = result;
 
       if (!destination) {
         return;
@@ -134,6 +134,17 @@ export default class App extends Component {
         destination.droppableId === source.droppableId &&
         destination.index === source.index
       ) {
+        return;
+      }
+
+      if (type === 'column') {
+        const newColumnOrder = Array.from(this.state.columns);
+        const column = newColumnOrder.splice(source.index, 1);
+        newColumnOrder.splice(destination.index, 0, ...column);
+
+        this.setState({
+          columns: newColumnOrder
+        })
         return;
       }
 

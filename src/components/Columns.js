@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 
 import Column from './Column';
 
@@ -10,7 +11,7 @@ export default class Columns extends Component {
 
     const { addTaskItem, onDeletedColumn, onDeletedTask } = this.props;
 
-    const columns = this.props.columns.map((item) => {
+    const columns = this.props.columns.map((item, index) => {
       const { idColumn, ...itemProps } = item;
 
       return (
@@ -19,6 +20,7 @@ export default class Columns extends Component {
             { ...itemProps }
             addTaskItem={addTaskItem}
             idColumn={idColumn}
+            index={index}
             onDeletedColumn={onDeletedColumn}
             onDeletedTask={onDeletedTask}
           />
@@ -29,9 +31,18 @@ export default class Columns extends Component {
 
     return(
       <main className="content">
-        <div className="columns">
-          { columns }
-        </div>
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column"
+        >
+          {provided => (
+            <div className="columns" {...provided.droppableProps} ref={provided.innerRef}>
+              { columns }
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </main>
     );
   }
