@@ -220,7 +220,7 @@ body {
   align-items: center;
   height: 30px;
   width: 100%;
-  cursor: pointer;
+  cursor: pointer !important;
   background: #1a4760;
   border-radius: 5px;
   margin-bottom: 5px;

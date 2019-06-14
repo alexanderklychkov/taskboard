@@ -124,8 +124,76 @@ export default class App extends Component {
     };
     
     this.onDragEnd = (result) => {
+      const { destination, source } = result;
 
-    }
+      if (!destination) {
+        return;
+      }
+
+      if (
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
+      ) {
+        return;
+      }
+
+      const idxStart = this.state.columns.findIndex((el) => el.idColumn === source.droppableId);
+      const idxFinish = this.state.columns.findIndex((el) => el.idColumn === destination.droppableId);
+
+      const start = this.state.columns[idxStart];
+      const finish = this.state.columns[idxFinish];
+
+      if (start === finish) {
+        const tasks = Array.from(start.tasks);
+        const task = tasks.splice(source.index, 1);
+        tasks.splice(destination.index, 0, ...task);
+
+        start.tasks = tasks;
+
+        this.setState((state) => {
+          const before = state.columns.slice(0, idxStart);
+          const after = state.columns.slice(idxStart + 1);
+
+          const newArray = [...before, start, ...after];
+
+          localStorage.setItem('columns', JSON.stringify(newArray));
+
+          return {
+            columns: newArray
+          }
+        });
+        return;
+      }
+
+      // Moving from one list to another
+      const startTaskIds = Array.from(start.tasks);
+      const task = startTaskIds.splice(source.index, 1);
+
+      start.tasks = startTaskIds;
+
+      const finishTaskIds = Array.from(finish.tasks);
+      finishTaskIds.splice(destination.index, 0, ...task);
+
+      finish.tasks = finishTaskIds;
+
+      this.setState((state) => {
+        const beforeStart = state.columns.slice(0, idxStart);
+        const afterStart = state.columns.slice(idxStart + 1);
+
+        let newArray = [...beforeStart, start, ...afterStart];
+
+        const beforeFinish = state.columns.slice(0, idxFinish);
+        const afterFinish = state.columns.slice(idxFinish + 1);
+
+        newArray = [...beforeFinish, finish, ...afterFinish];
+
+        localStorage.setItem('columns', JSON.stringify(newArray));
+
+        return {
+          columns: newArray
+        }
+      });    
+    };
   }
 
   createColumnItem(label) {
