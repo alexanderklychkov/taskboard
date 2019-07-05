@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import TmpInput from './TmpInput';
 
 export default class PropertyBoard extends Component {

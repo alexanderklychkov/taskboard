@@ -58,6 +58,55 @@ body {
   margin-right: 5px;
 }
 
+.select {
+  background: #f5f5f5;
+  border: 1px solid #1a4760;
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 5px;
+  margin-left: 5px;
+  margin-bottom: 20px;
+}
+
+.reset-margin {
+  margin-bottom: 2px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.line-throught {
+  text-decoration: line-through;
+}
+
+.margin-right {
+  margin-right: 25px;
+}
+
+.margin-left {
+  margin-left: 30px;
+}
+
+/* 
+  Styles for priority
+*/
+
+.high {
+  color: #ff0000
+}
+
+.medium {
+  color: #fab835;
+}
+
+.low {
+  color: #9ddf3e;
+}
+
 /* 
   Styles for Button
 */
@@ -114,6 +163,10 @@ body {
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
+}
+
+.column-property--margin {
+  margin-bottom: 10px;
 }
 
 .modalHeader i{
@@ -175,7 +228,6 @@ body {
   border-radius: 5px;
   margin: 20px;
   font-size: 14px; 
-
 }
 
 .column-head {
@@ -219,12 +271,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #1a4760;
+  border-radius: 5px;
+  margin-bottom: 5px; 
   height: 30px;
   width: 100%;
   cursor: pointer !important;
+}
+
+.current {
+  background: #34a734;
+}
+
+.not-current {
   background: #1a4760;
-  border-radius: 5px;
-  margin-bottom: 5px;
 }
 
 .column-tasks__item:nth-last-child(1) {
@@ -238,6 +298,11 @@ body {
 .column-tasks__item-property {
   font-size: 40px;
   margin-right: 5px;
+}
+
+.column-tasks__item-current {
+  font-size: 18px;
+  margin-right: 10px;
 }
 
 .column-add-task {
@@ -257,4 +322,15 @@ body {
 
 .form-add-task__input {
   margin-bottom: 5px;
+}
+
+.searchPanel {
+  width: 270px;
+  background-color: #2b7099;
+  position: absolute;
+  top: 55px;
+  right: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #000;
+  padding: 20px;
 }

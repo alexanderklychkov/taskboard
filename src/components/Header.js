@@ -4,6 +4,7 @@ import Button from './Button';
 import Modal from './Modal';
 import PropertyBoard from './PropertyBoard';
 import AddColumn from './AddColumn';
+import SearchTask from './SearchTask';
 
 export default class Header extends Component {
   constructor() {
@@ -25,7 +26,7 @@ export default class Header extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { openTmpInput, nameBoard, inputOpen, closeTmpInput, addColumnItem } = this.props;
+    const { openTmpInput, nameBoard, inputOpen, closeTmpInput, addColumnItem, tasks } = this.props;
 
     return(
       <header className="header">
@@ -36,11 +37,11 @@ export default class Header extends Component {
           <AddColumn addColumnItem={addColumnItem}/>
         </div>
         <div className="property-board">
-          <Button onClick={this.openModal}>Свойства</Button>
+          <Button className="margin-right" onClick={this.openModal}>Свойства</Button>
         </div>
-        <div className="search-task">
-          adsdasds
-        </div>
+        {/* <div className="search-task">
+          <SearchTask tasks={tasks}/>
+        </div> */}
 
         <Modal
           title="Свойства доски"

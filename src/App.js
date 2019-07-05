@@ -8,13 +8,17 @@ export default class App extends Component {
   constructor() {
     super();
 
-    this.columnId = localStorage.getItem('columnId') !== null ? +JSON.parse(localStorage.getItem('columnId')) + 1 : 0;
-    this.taskId = localStorage.getItem('taskId') !== null ? +JSON.parse(localStorage.getItem('taskId')) + 1 : 0;
+    this.column = localStorage.getItem('columnId') !== null ? +JSON.parse(localStorage.getItem('columnId')) + 1 : 0;
+    this.columnId = localStorage.getItem('columnId') !== null ? +JSON.parse(localStorage.getItem('columnId')) + 1 : `column-${this.column}`;
+
+    this.task = localStorage.getItem('taskId') !== null ? +JSON.parse(localStorage.getItem('taskId')) + 1 : 0;
+    this.taskId = localStorage.getItem('taskId') !== null ? +JSON.parse(localStorage.getItem('taskId')) + 1 : `task-${this.task}`;
 
     this.state = {
-      nameBoard: localStorage.getItem('nameBoard') !== null ? localStorage.getItem('nameBoard') : 'TaskBoard',
+      nameBoard: localStorage.getItem('nameBoard') !== null ? localStorage.getItem('nameBoard') : 'Доска задач',
       inputOpen: false,
-      columns: localStorage.getItem('columns') !== null ? JSON.parse(localStorage.getItem('columns')) : []
+      columns: localStorage.getItem('columns') !== null ? JSON.parse(localStorage.getItem('columns')) : [],
+      term: ''
     };
 
     this.addColumnItem = (text) => {
@@ -54,8 +58,8 @@ export default class App extends Component {
       });
     }
 
-    this.addTaskItem = (text, idColumn) => {
-      const newItem = this.createTaskItem(text);
+    this.addTaskItem = (text, idColumn, priority) => {
+      const newItem = this.createTaskItem(text, priority);
       const idx = this.state.columns.findIndex((el) => el.idColumn === idColumn);
       let column = {...this.state.columns[idx]};
       column.tasks = [
@@ -103,28 +107,9 @@ export default class App extends Component {
       });
     };
 
-    this._updateNameBoard = (value) => {
-      let newValue = value;
-
-      if (!newValue.length) {
-        newValue = this.state.nameBoard;
-      }
-
-      this.setState({ nameBoard: newValue });
-      localStorage.setItem('nameBoard', newValue);
-    };
-
-    this.closeTmpInput = (elem) => {
-      this.setState({ inputOpen: false });
-      return this._updateNameBoard(elem.value);
-    };
-
-    this.openTmpInput = (elem) => {
-      this.setState({ inputOpen: true });
-    };
     
     this.onDragEnd = (result) => {
-      const { destination, source, draggableId, type } = result;
+      const { destination, source, type } = result;
 
       if (!destination) {
         return;
@@ -140,7 +125,9 @@ export default class App extends Component {
       if (type === 'column') {
         const newColumnOrder = Array.from(this.state.columns);
         const column = newColumnOrder.splice(source.index, 1);
-        newColumnOrder.splice(destination.index, 0, ...column);
+        newColumnOrder.splice(destination.index, 0, column[0]);
+
+        localStorage.setItem('columns', JSON.stringify(newColumnOrder));
 
         this.setState({
           columns: newColumnOrder
@@ -157,7 +144,7 @@ export default class App extends Component {
       if (start === finish) {
         const tasks = Array.from(start.tasks);
         const task = tasks.splice(source.index, 1);
-        tasks.splice(destination.index, 0, ...task);
+        tasks.splice(destination.index, 0, task[0]);
 
         start.tasks = tasks;
 
@@ -183,7 +170,7 @@ export default class App extends Component {
       start.tasks = startTaskIds;
 
       const finishTaskIds = Array.from(finish.tasks);
-      finishTaskIds.splice(destination.index, 0, ...task);
+      finishTaskIds.splice(destination.index, 0, task[0]);
 
       finish.tasks = finishTaskIds;
 
@@ -205,22 +192,60 @@ export default class App extends Component {
         }
       });    
     };
+
+    this._updateNameBoard = (value) => {
+      let newValue = value;
+
+      if (!newValue.length) {
+        newValue = this.state.nameBoard;
+      }
+
+      this.setState({ nameBoard: newValue });
+      localStorage.setItem('nameBoard', newValue);
+    };
+
+    this.closeTmpInput = (elem) => {
+      this.setState({ inputOpen: false });
+      return this._updateNameBoard(elem.value);
+    };
+
+    this.openTmpInput = (elem) => {
+      this.setState({ inputOpen: true });
+    };
+    
+    this._updateState = (newState) => {
+      this.setState(newState);
+    }
   }
 
   createColumnItem(label) {
-    localStorage.setItem('columnId', JSON.stringify(this.columnId));
+    localStorage.setItem('columnId', JSON.stringify(this.column));
+    let date = new Date();
+
+    let month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    let hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
     return {
-      idColumn: this.columnId++,
+      idColumn: `column-${this.column++}`,
       label,
+      createDate: date.getDate() + '.' + month + '.' + date.getFullYear() + ' ' + hour + ':' + minutes,
       tasks: []
     }
   }
 
-  createTaskItem(label) {    
-    localStorage.setItem('taskId', JSON.stringify(this.taskId));
+  createTaskItem(label, priority) {    
+    localStorage.setItem('taskId', JSON.stringify(this.task));
+    let date = new Date();
+
+    let month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    let hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
     return {
-      idTask: this.taskId++,
-      label
+      idTask: `task-${this.task++}`,
+      label,
+      createDate: date.getDate() + '.' + month + '.' + date.getFullYear() + ' ' + hour + ':' + minutes,
+      priority,
+      isCurrent: 'false'
     }
   }
   
@@ -235,6 +260,7 @@ export default class App extends Component {
           inputOpen={inputOpen}
           closeTmpInput={this.closeTmpInput}
           addColumnItem={this.addColumnItem}
+          tasks={columns}
         />
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Columns 
@@ -242,8 +268,9 @@ export default class App extends Component {
             addTaskItem={this.addTaskItem}
             onDeletedColumn={this.deleteColumnItem}
             onDeletedTask={this.deleteTaskItem}
+            updateState={this._updateState}
           />
-        </DragDropContext>      
+        </DragDropContext>        
       </div>  
     );
   }

@@ -9,7 +9,8 @@ export default class AddTasks extends Component {
 
     this.state = {
       label: '',
-      isOpen: false
+      isOpen: false,
+      valuePriority: 'high'
     };
 
     this.onLabelChange = (e) => {
@@ -20,7 +21,7 @@ export default class AddTasks extends Component {
 
     this.onSubmit = (e) => {
       e.preventDefault();
-      this.props.addTaskItem(this.state.label, this.props.idColumn);
+      this.props.addTaskItem(this.state.label, this.props.idColumn, this.state.valuePriority);
       this.setState({
         label: ''
       });
@@ -33,10 +34,14 @@ export default class AddTasks extends Component {
     this.handleCancel = () => {
       this.setState({isOpen: false});
     };
+
+    this.handleChange = (e) => {
+      this.setState({valuePriority: e.target.value});
+    }
   }
 
   render() {
-    const { isOpen } = this.state;
+    const { isOpen, valuePriority } = this.state;
 
     return(
       <>
@@ -47,7 +52,15 @@ export default class AddTasks extends Component {
           onCancel={this.handleCancel}
         >
           <form className="form-add-task" onSubmit={this.onSubmit}>
-            <input className="input form-add-task__input" type="text" onChange={this.onLabelChange} placeholder="Название задачи..." value={this.state.label} autoFocus={true}/>
+            <input className="input form-add-task__input" type="text" onChange={this.onLabelChange} placeholder="Название задачи..." value={this.state.label} autoFocus={true} required/>
+            <label>
+              Приоритет:  
+              <select className="select" value={valuePriority} onChange={this.handleChange}>
+                <option value="high">Высокий</option>
+                <option value="medium">Средний</option>
+                <option value="low">Низкий</option>
+              </select>
+            </label>
             <Button>Добавить задачу</Button>
           </form>
         </Modal>
